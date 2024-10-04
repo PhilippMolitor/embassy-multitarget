@@ -1,0 +1,16 @@
+# rust
+out/
+debug/
+**/*.rs.bk
+*.pdb
+
+# environment
+.env
+.env.*
+
+# macOS
+.DS_Store
+._*
+
+# logging
+*.log

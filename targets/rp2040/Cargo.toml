@@ -1,0 +1,7 @@
+[package]
+name = "rp2040"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+hal = { path = "../../hal", features = ["target-rp2040"], default-features = false }

@@ -1,0 +1,42 @@
+[package]
+name = "hal"
+version = "0.1.0"
+edition = "2021"
+build = "build.rs"
+
+[features]
+default = ["target-none"]
+target-none = []
+
+arch-cortex-m = ["dep:cortex-m", "dep:cortex-m-rt", "embassy-executor/arch-cortex-m"]
+
+platform-stm32 = ["arch-cortex-m"]
+platform-rp = ["arch-cortex-m"]
+
+target-stm32h743 = ["platform-stm32", "embassy-stm32/stm32h743vi"]
+target-stm32f466 = ["platform-stm32", "embassy-stm32/stm32f446ve"]
+target-rp2040 = ["platform-rp", "dep:embassy-rp"]
+#target-rp235xa = ["platform-rp", "embassy-rp/rp235xa"]
+#target-rp235xb = ["platform-rp", "embassy-rp/rp235xb"]
+
+[dependencies]
+# embassy shared
+embassy-executor = { version = "0.6.0", features = ["defmt", "executor-thread", "executor-interrupt", "integrated-timers"] }
+embassy-sync = { version = "0.6.0", features = ["defmt"] }
+embassy-time = { version = "0.3.2", features = ["defmt", "defmt-timestamp-uptime", "tick-hz-32_768"] }
+embassy-usb = { version = "0.3.0", features = ["defmt"] }
+
+# required core libraries
+defmt = { version = "0.3.8" }
+defmt-rtt = { version = "0.4.1"}
+panic-probe = { version = "0.3.2", features = ["print-defmt"] }
+embedded-hal = { version = "1.0.0" }
+embedded-hal-async = { version = "1.0.0" }
+
+# target-relevant dependencies
+cortex-m = { version = "0.7.7", features = ["critical-section-single-core"], optional = true }
+cortex-m-rt = { version = "0.7.3", optional = true }
+
+# targets
+embassy-stm32 = { version = "0.1.0", features = ["rt", "time-driver-any", "unstable-pac", "memory-x", "defmt"], optional = true }
+embassy-rp = { version = "0.2.0", features = ["time-driver", "critical-section-impl", "defmt"], optional = true }
