@@ -4,4 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-hal = { path = "../../hal", features = ["target-stm32h743"], default-features = false }
+hal = { path = "../../hal", features = [
+  "target-stm32h743",
+], default-features = false }

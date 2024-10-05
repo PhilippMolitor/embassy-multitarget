@@ -1,11 +1,22 @@
 #![no_std]
 #![no_main]
 
-use hal::prelude::cortex_m_rt;
-use hal::prelude::embassy_executor::{main, Spawner};
+use hal::*;
 
-#[main]
-async fn main(_s: Spawner) {}
+use cortex_m_rt::entry;
+use embassy_executor::Spawner;
+
+// Doeesn't work
+#[embassy_executor::main]
+async fn main(s: Spawner) {
+    loop {}
+}
+
+// Works
+#[entry]
+fn main() -> ! {
+    loop {}
+}
 
 /*
 use hal::prelude::*;
