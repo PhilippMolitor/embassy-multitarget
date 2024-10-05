@@ -4,6 +4,9 @@ version = "0.1.0"
 edition = "2021"
 build = "build.rs"
 
+[lib]
+proc-macro = true
+
 [features]
 default = ["target-none"]
 target-none = []

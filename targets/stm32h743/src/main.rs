@@ -3,18 +3,11 @@
 
 use hal::*;
 
-use cortex_m_rt::entry;
-use embassy_executor::Spawner;
+use embassy_executor::{main, Spawner};
 
 // Doeesn't work
-#[embassy_executor::main]
-async fn main(s: Spawner) {
-    loop {}
-}
-
-// Works
-#[entry]
-fn main() -> ! {
+#[main]
+async fn main(_s: Spawner) {
     loop {}
 }
 
