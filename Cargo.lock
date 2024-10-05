@@ -1354,6 +1354,7 @@ dependencies = [
 name = "stm32h743"
 version = "0.1.0"
 dependencies = [
+ "embassy-executor",
  "hal",
 ]
 

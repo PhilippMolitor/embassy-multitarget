@@ -44,6 +44,28 @@ lto = 'fat'
 opt-level = 3            # <-
 overflow-checks = false  # <-
 
+[workspace.dependencies]
+# embassy
+embassy-executor = { version = "0.6.0" }
+embassy-sync = { version = "0.6.0" }
+embassy-time = { version = "0.3.2" }
+embassy-usb = { version = "0.3.0" }
+
+# embassy targets
+embassy-stm32 = { version = "0.1.0" }
+embassy-rp = { version = "0.2.0" }
+
+# required core libraries
+defmt = { version = "0.3.8" }
+defmt-rtt = { version = "0.4.1" }
+panic-probe = { version = "0.3.2" }
+embedded-hal = { version = "1.0.0" }
+embedded-hal-async = { version = "1.0.0" }
+
+# target-relevant dependencies
+cortex-m = { version = "0.7.7" }
+cortex-m-rt = { version = "0.7.3" }
+
 [patch.crates-io]
 embassy-embedded-hal = { git = "https://github.com/embassy-rs/embassy", rev = "6e0b08291b63a0da8eba9284869d1d046bc5dabb" }
 embassy-executor = { git = "https://github.com/embassy-rs/embassy", rev = "6e0b08291b63a0da8eba9284869d1d046bc5dabb" }

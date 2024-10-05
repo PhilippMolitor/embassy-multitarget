@@ -4,9 +4,6 @@ version = "0.1.0"
 edition = "2021"
 build = "build.rs"
 
-[lib]
-proc-macro = true
-
 [features]
 default = ["target-none"]
 target-none = []
@@ -28,42 +25,42 @@ target-rp2040 = ["platform-rp", "dep:embassy-rp"]
 
 [dependencies]
 # embassy shared
-embassy-executor = { version = "0.6.0", features = [
+embassy-executor = { workspace = true, features = [
   "defmt",
   "executor-thread",
   "executor-interrupt",
   "integrated-timers",
 ] }
-embassy-sync = { version = "0.6.0", features = ["defmt"] }
-embassy-time = { version = "0.3.2", features = [
+embassy-sync = { workspace = true, features = ["defmt"] }
+embassy-time = { workspace = true, features = [
   "defmt",
   "defmt-timestamp-uptime",
   "tick-hz-32_768",
 ] }
-embassy-usb = { version = "0.3.0", features = ["defmt"] }
+embassy-usb = { workspace = true, features = ["defmt"] }
 
 # required core libraries
-defmt = { version = "0.3.8" }
-defmt-rtt = { version = "0.4.1" }
-panic-probe = { version = "0.3.2", features = ["print-defmt"] }
-embedded-hal = { version = "1.0.0" }
-embedded-hal-async = { version = "1.0.0" }
+defmt = { workspace = true }
+defmt-rtt = { workspace = true }
+panic-probe = { workspace = true, features = ["print-defmt"] }
+embedded-hal = { workspace = true }
+embedded-hal-async = { workspace = true }
 
 # target-relevant dependencies
-cortex-m = { version = "0.7.7", features = [
+cortex-m = { workspace = true, features = [
   "critical-section-single-core",
 ], optional = true }
-cortex-m-rt = { version = "0.7.3", optional = true }
+cortex-m-rt = { workspace = true, optional = true }
 
 # targets
-embassy-stm32 = { version = "0.1.0", features = [
+embassy-stm32 = { workspace = true, features = [
   "rt",
   "time-driver-any",
   "unstable-pac",
   "memory-x",
   "defmt",
 ], optional = true }
-embassy-rp = { version = "0.2.0", features = [
+embassy-rp = { workspace = true, features = [
   "time-driver",
   "critical-section-impl",
   "defmt",
