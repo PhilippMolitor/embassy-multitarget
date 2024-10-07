@@ -8,59 +8,59 @@ build = "build.rs"
 default = ["target-none"]
 target-none = []
 
-arch-cortex-m = [
+_arch-cortex-m = [
   "dep:cortex-m",
   "dep:cortex-m-rt",
   "embassy-executor/arch-cortex-m",
 ]
 
-platform-stm32 = ["arch-cortex-m"]
-platform-rp = ["arch-cortex-m"]
+_platform-stm32 = ["_arch-cortex-m"]
+_platform-rp = ["_arch-cortex-m"]
 
-target-stm32h743 = ["platform-stm32", "embassy-stm32/stm32h743vi"]
-target-stm32f466 = ["platform-stm32", "embassy-stm32/stm32f446ve"]
-target-rp2040 = ["platform-rp", "dep:embassy-rp"]
-#target-rp235xa = ["platform-rp", "embassy-rp/rp235xa"]
-#target-rp235xb = ["platform-rp", "embassy-rp/rp235xb"]
+target-stm32h743 = ["_platform-stm32", "embassy-stm32/stm32h743vi"]
+target-stm32f466 = ["_platform-stm32", "embassy-stm32/stm32f446ve"]
+target-rp2040 = ["_platform-rp", "dep:embassy-rp"]
+#target-rp235xa = ["_platform-rp", "embassy-rp/rp235xa"]
+#target-rp235xb = ["_platform-rp", "embassy-rp/rp235xb"]
 
 [dependencies]
-# embassy shared
 embassy-executor = { workspace = true, features = [
   "defmt",
   "executor-thread",
   "executor-interrupt",
   "integrated-timers",
 ] }
-embassy-sync = { workspace = true, features = ["defmt"] }
-embassy-time = { workspace = true, features = [
+embassy-sync = { version = "0.6.0", features = ["defmt"] }
+embassy-time = { version = "0.3.2", features = [
   "defmt",
   "defmt-timestamp-uptime",
   "tick-hz-32_768",
 ] }
-embassy-usb = { workspace = true, features = ["defmt"] }
+embassy-usb = { version = "0.3.0", features = ["defmt"] }
 
 # required core libraries
-defmt = { workspace = true }
-defmt-rtt = { workspace = true }
-panic-probe = { workspace = true, features = ["print-defmt"] }
-embedded-hal = { workspace = true }
-embedded-hal-async = { workspace = true }
+defmt = { version = "0.3.8" }
+defmt-rtt = { version = "0.4.1" }
+panic-probe = { version = "0.3.2", features = ["print-defmt"] }
+embedded-hal = { version = "1.0.0" }
+embedded-hal-async = { version = "1.0.0" }
 
 # target-relevant dependencies
-cortex-m = { workspace = true, features = [
+cortex-m = { version = "0.7.7", features = [
   "critical-section-single-core",
 ], optional = true }
-cortex-m-rt = { workspace = true, optional = true }
+cortex-m-rt = { version = "0.7.3", optional = true }
 
 # targets
-embassy-stm32 = { workspace = true, features = [
+embassy-stm32 = { version = "0.1.0", features = [
   "rt",
   "time-driver-any",
+  "exti",
   "unstable-pac",
   "memory-x",
   "defmt",
 ], optional = true }
-embassy-rp = { workspace = true, features = [
+embassy-rp = { version = "0.2.0", features = [
   "time-driver",
   "critical-section-impl",
   "defmt",

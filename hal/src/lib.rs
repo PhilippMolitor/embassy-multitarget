@@ -10,13 +10,13 @@ pub extern crate embedded_hal;
 pub extern crate embedded_hal_async;
 pub extern crate panic_probe;
 
-#[cfg(feature = "arch-cortex-m")]
+#[cfg(feature = "_arch-cortex-m")]
 pub extern crate cortex_m;
-#[cfg(feature = "arch-cortex-m")]
+#[cfg(feature = "_arch-cortex-m")]
 pub extern crate cortex_m_rt;
 
-#[cfg(feature = "platform-stm32")]
+#[cfg(feature = "_platform-stm32")]
 pub extern crate embassy_stm32;
 
-#[cfg(feature = "platform-rp")]
+#[cfg(feature = "_platform-rp")]
 pub extern crate embassy_rp;
