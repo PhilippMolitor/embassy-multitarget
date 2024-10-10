@@ -29,17 +29,17 @@ async fn main(s: Spawner) {
     let mut config = Config::default();
 
     // clock configuration
-    config.rcc.hse = Some(Hse { freq: mhz(25), mode: HseMode::Oscillator });
-    config.rcc.sys = Sysclk::HSE;
+    config.rcc.hse = Some(Hse { freq: mhz(8), mode: HseMode::Oscillator });
+    // config.rcc.sys = Sysclk::HSE;
     config.rcc.ls = LsConfig::default_lse();
 
     let p = init(config);
 
     info!("Hello World!");
 
-    let p_led = Output::new(p.PE3, Level::High, Speed::Low);
-    let p_button = ExtiInput::new(p.PC13, p.EXTI13, Pull::Down);
+    let p_led = Output::new(p.PC13, Level::High, Speed::Low);
+    let p_button = ExtiInput::new(p.PA0, p.EXTI0, Pull::Up);
 
     s.spawn(task_blinky(p_led, &CHANNEL_BLINKY_CONTROL)).expect("blink spawn failed");
-    s.spawn(task_button(p_button, false, &CHANNEL_BLINKY_CONTROL)).expect("button spawn failed");
+    s.spawn(task_button(p_button, true, &CHANNEL_BLINKY_CONTROL)).expect("button spawn failed");
 }

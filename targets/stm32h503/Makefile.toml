@@ -5,7 +5,7 @@ args = [
   "--",
   "-O",
   "binary",
-  "../../out/thumbv7em-none-eabihf/debug/stm32h743.bin",
+  "../../out/thumbv8m.main-none-eabihf/debug/stm32h503.bin",
 ]
 
 [tasks.dfu-debug]
@@ -16,7 +16,7 @@ args = [
   "-s",
   "0x08000000:leave",
   "-D",
-  "../../out/thumbv7em-none-eabihf/debug/stm32h743.bin",
+  "../../out/thumbv8m.main-none-eabihf/debug/stm32h503.bin",
 ]
 dependencies = ["firmware-debug"]
 
@@ -28,7 +28,7 @@ args = [
   "--",
   "-O",
   "binary",
-  "../../out/thumbv7em-none-eabihf/release/stm32h743.bin",
+  "../../out/thumbv8m.main-none-eabihf/release/stm32h503.bin",
 ]
 
 [tasks.dfu-release]
@@ -39,6 +39,6 @@ args = [
   "-s",
   "0x08000000:leave",
   "-D",
-  "../../out/thumbv7em-none-eabihf/release/stm32h743.bin",
+  "../../out/thumbv8m.main-none-eabihf/release/stm32h503.bin",
 ]
 dependencies = ["firmware-release"]

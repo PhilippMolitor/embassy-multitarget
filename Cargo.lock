@@ -132,6 +132,14 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b048fb63fd8b5923fc5aa7b340d8e156aec7ec02f0c78fa8a6ddc2613f6f71de"
 
 [[package]]
+name = "blinky"
+version = "0.1.0"
+dependencies = [
+ "embassy-executor",
+ "hal",
+]
+
+[[package]]
 name = "block-device-driver"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -681,6 +689,14 @@ name = "equivalent"
 version = "1.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5443807d6dff69373d433ab9ef5378ad8df50ca6298caf15de6e52e24aaf54d5"
+
+[[package]]
+name = "exti-button"
+version = "0.1.0"
+dependencies = [
+ "embassy-executor",
+ "hal",
+]
 
 [[package]]
 name = "fixed"
@@ -1351,10 +1367,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "stm32h503"
+version = "0.1.0"
+dependencies = [
+ "blinky",
+ "embassy-executor",
+ "exti-button",
+ "hal",
+]
+
+[[package]]
 name = "stm32h743"
 version = "0.1.0"
 dependencies = [
+ "blinky",
  "embassy-executor",
+ "exti-button",
  "hal",
 ]
 

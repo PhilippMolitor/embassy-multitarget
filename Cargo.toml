@@ -1,5 +1,5 @@
 [workspace]
-members = ["hal", "targets/*"]
+members = ["hal", "targets/*", "tasks/*"]
 resolver = "2"
 
 # cargo build/run

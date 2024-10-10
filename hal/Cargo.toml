@@ -14,12 +14,13 @@ _arch-cortex-m = [
   "embassy-executor/arch-cortex-m",
 ]
 
-_platform-stm32 = ["_arch-cortex-m"]
-_platform-rp = ["_arch-cortex-m"]
+_platform-stm32 = ["dep:embassy-stm32", "_arch-cortex-m"]
+_platform-rp = ["dep:embassy-rp", "_arch-cortex-m"]
 
-target-stm32h743 = ["_platform-stm32", "embassy-stm32/stm32h743vi"]
 target-stm32f466 = ["_platform-stm32", "embassy-stm32/stm32f446ve"]
-target-rp2040 = ["_platform-rp", "dep:embassy-rp"]
+target-stm32h503 = ["_platform-stm32", "embassy-stm32/stm32h503cb"]
+target-stm32h743 = ["_platform-stm32", "embassy-stm32/stm32h743vi"]
+target-rp2040 = ["_platform-rp"]
 #target-rp235xa = ["_platform-rp", "embassy-rp/rp235xa"]
 #target-rp235xb = ["_platform-rp", "embassy-rp/rp235xb"]
 
