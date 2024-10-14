@@ -5,64 +5,137 @@ edition = "2021"
 build = "build.rs"
 
 [features]
-default = ["target-none"]
-target-none = []
+default = ["_hal_defmt"]
+_hal_target_selected = []
+
+# architectures
 
 _arch-cortex-m = [
   "dep:cortex-m",
   "dep:cortex-m-rt",
+  "dep:panic-probe",
   "embassy-executor/arch-cortex-m",
 ]
 
-_platform-stm32 = ["dep:embassy-stm32", "_arch-cortex-m"]
-_platform-rp = ["dep:embassy-rp", "_arch-cortex-m"]
+_arch-riscv32 = ["embassy-executor/arch-riscv32"]
 
-target-stm32f466 = ["_platform-stm32", "embassy-stm32/stm32f446ve"]
-target-stm32h503 = ["_platform-stm32", "embassy-stm32/stm32h503cb"]
-target-stm32h743 = ["_platform-stm32", "embassy-stm32/stm32h743vi"]
-target-rp2040 = ["_platform-rp"]
-#target-rp235xa = ["_platform-rp", "embassy-rp/rp235xa"]
-#target-rp235xb = ["_platform-rp", "embassy-rp/rp235xb"]
+# platforms
+
+_platform-stm32 = ["dep:embassy-stm32", "_arch-cortex-m"]
+_platform-rp = ["dep:embassy-rp", "dep:pio", "dep:pio-proc", "_arch-cortex-m"]
+_platform-ch32 = [
+  "dep:qingke",
+  "dep:qingke-rt",
+  "dep:ch32-hal",
+  "_arch-riscv32",
+]
+
+# internal feature collections
+
+_hal_defmt = [
+  "dep:defmt",
+  "dep:defmt-rtt",
+  "embassy-executor/defmt",
+  "embassy-sync/defmt",
+  "embassy-time/defmt",
+  "embassy-time/defmt-timestamp-uptime",
+  "embassy-usb/defmt",
+  "embedded-hal/defmt-03",
+  "embedded-hal-async/defmt-03",
+  "embedded-hal-bus/defmt-03",
+  "embedded-io/defmt-03",
+  "embedded-io-async/defmt-03",
+  "embassy-stm32?/defmt",
+  "embassy-rp?/defmt",
+  "ch32-hal?/defmt",
+  "panic-probe?/print-defmt",
+]
+
+# actual targets
+
+target-stm32f446re = [
+  "_hal_target_selected",
+  "_platform-stm32",
+  "embassy-stm32/stm32f446re",
+]
+target-stm32g431cb = [
+  "_hal_target_selected",
+  "_platform-stm32",
+  "embassy-stm32/stm32g431cb",
+]
+target-stm32h503cb = [
+  "_hal_target_selected",
+  "_platform-stm32",
+  "embassy-stm32/stm32h503cb",
+]
+target-stm32h743vi = [
+  "_hal_target_selected",
+  "_platform-stm32",
+  "embassy-stm32/stm32h743vi",
+]
+
+target-rp2040 = ["_hal_target_selected", "_platform-rp", "embassy-rp/rp2040"]
+target-rp235xa = ["_hal_target_selected", "_platform-rp", "embassy-rp/rp235xa"]
+target-rp235xb = ["_hal_target_selected", "_platform-rp", "embassy-rp/rp235xb"]
+
+target-ch32v203c8t6 = [
+  "_hal_target_selected",
+  "_platform-ch32",
+  "ch32-hal/ch32v203c8t6",
+]
 
 [dependencies]
+# arch support
+cortex-m = { version = "0.7.7", features = [
+  "critical-section-single-core",
+  "inline-asm",
+], optional = true }
+cortex-m-rt = { version = "0.7.3", optional = true }
+qingke = { version = "0.3.0", optional = true }
+qingke-rt = { version = "0.3.0", optional = true }
+
+# embassy
 embassy-executor = { workspace = true, features = [
-  "defmt",
   "executor-thread",
   "executor-interrupt",
   "integrated-timers",
 ] }
-embassy-sync = { version = "0.6.0", features = ["defmt"] }
-embassy-time = { version = "0.3.2", features = [
-  "defmt",
-  "defmt-timestamp-uptime",
-  "tick-hz-32_768",
-] }
-embassy-usb = { version = "0.3.0", features = ["defmt"] }
+embassy-sync = { version = "0.6.0" }
+embassy-time = { version = "0.3.2", features = ["tick-hz-32_768"] }
+embassy-usb = { version = "0.3.0" }
 
-# required core libraries
-defmt = { version = "0.3.8" }
-defmt-rtt = { version = "0.4.1" }
-panic-probe = { version = "0.3.2", features = ["print-defmt"] }
-embedded-hal = { version = "1.0.0" }
-embedded-hal-async = { version = "1.0.0" }
-
-# target-relevant dependencies
-cortex-m = { version = "0.7.7", features = [
-  "critical-section-single-core",
-], optional = true }
-cortex-m-rt = { version = "0.7.3", optional = true }
-
-# targets
+# embassy targets
 embassy-stm32 = { version = "0.1.0", features = [
   "rt",
   "time-driver-any",
   "exti",
   "unstable-pac",
   "memory-x",
-  "defmt",
 ], optional = true }
 embassy-rp = { version = "0.2.0", features = [
   "time-driver",
   "critical-section-impl",
-  "defmt",
+  "unstable-pac",
 ], optional = true }
+ch32-hal = { version = "*", features = [
+  "rt",
+  "highcode",
+  "embassy",
+  "time-driver-any",
+], optional = true }
+
+# platform specific support crates
+pio = { version = "0.2.1", optional = true }
+pio-proc = { version = "0.2.1", optional = true }
+
+# embedded-hal
+embedded-hal = { version = "1.0.0" }
+embedded-hal-async = { version = "1.0.0" }
+embedded-hal-bus = { version = "0.2.0", features = ["async"] }
+embedded-io = { version = "0.6.1" }
+embedded-io-async = { version = "0.6.1" }
+
+# development utilities
+defmt = { version = "0.3.8", optional = true }
+defmt-rtt = { version = "0.4.1", optional = true }
+panic-probe = { version = "0.3.2", optional = true }

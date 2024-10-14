@@ -3,9 +3,6 @@
 
 use hal::*;
 
-#[allow(unused_imports)]
-use {defmt_rtt as _, panic_probe as _};
-
 use defmt::*;
 
 use embassy_executor::{main, Spawner};
@@ -13,16 +10,12 @@ use embassy_stm32::{
     exti::ExtiInput,
     gpio::{Level, Output, Pull, Speed},
     init,
-    rcc::{Hse, HseMode, LsConfig, Sysclk},
+    rcc::{Hse, HseMode, LsConfig},
     time::mhz,
     Config,
 };
-use embassy_sync::{blocking_mutex::raw::ThreadModeRawMutex, channel::Channel};
 
-use blinky::task_blinky;
-use exti_button::task_button;
-
-static CHANNEL_BLINKY_CONTROL: Channel<ThreadModeRawMutex, bool, 1> = Channel::new();
+use app::{run_app, AppConfig};
 
 #[main]
 async fn main(s: Spawner) {
@@ -40,6 +33,10 @@ async fn main(s: Spawner) {
     let p_led = Output::new(p.PC13, Level::High, Speed::Low);
     let p_button = ExtiInput::new(p.PA0, p.EXTI0, Pull::Up);
 
-    s.spawn(task_blinky(p_led, &CHANNEL_BLINKY_CONTROL)).expect("blink spawn failed");
-    s.spawn(task_button(p_button, true, &CHANNEL_BLINKY_CONTROL)).expect("button spawn failed");
+    run_app(AppConfig {
+        spawner: s,
+        button_input: p_button,
+        button_pullup: true,
+        led_output: p_led,
+    });
 }

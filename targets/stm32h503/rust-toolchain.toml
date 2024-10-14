@@ -1,5 +1,0 @@
-[toolchain]
-channel = "stable"
-profile = "default"
-targets = ["thumbv8m.main-none-eabihf"]
-components = ["llvm-tools"]

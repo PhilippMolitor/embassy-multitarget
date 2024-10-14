@@ -1,12 +1,5 @@
 [build]
-target-dir = "out"
+target-dir = "out/target"
 
 [alias]
-# TODO: maybe do something here for multi-target/feature stuff
-
-[env]
-DEFMT_LOG = "trace"
-
-# [target.thumbv7em-none-eabihf]
-# TODO: can this be changed from build.rs or some cargo runner?
-# runner = 'probe-rs run --chip STM32H743VITx'
+xtask = "run --package xtask --release --quiet --"

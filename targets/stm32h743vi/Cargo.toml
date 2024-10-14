@@ -1,9 +1,9 @@
 [package]
-name = "rp2040"
+name = "stm32h743vi"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
 embassy-executor = { workspace = true }
-hal = { path = "../../hal", features = ["target-rp2040"] }
+hal = { path = "../../hal", features = ["target-stm32h743vi"] }
 app = { path = "../../app" }
